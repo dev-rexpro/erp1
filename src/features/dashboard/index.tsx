@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
-import { TopNav } from '@/components/layout/top-nav'
 import { HeaderRight } from '@/components/layout/header-right'
 import { Search } from '@/components/search'
 
@@ -15,7 +14,6 @@ export function Dashboard() {
     <>
       {/* ===== Top Heading ===== */}
       <Header>
-        <TopNav links={topNav} />
         <Search />
         <HeaderRight />
       </Header>
@@ -43,25 +41,4 @@ export function Dashboard() {
   )
 }
 
-const topNav = [
-  {
-    title: 'Overview',
-    href: '/',
-    isActive: true,
-  },
-  {
-    title: 'Customers',
-    href: '#',
-    isActive: false,
-  },
-  {
-    title: 'Products',
-    href: '#',
-    isActive: false,
-  },
-  {
-    title: 'Settings',
-    href: '#',
-    isActive: false,
-  },
-]
+

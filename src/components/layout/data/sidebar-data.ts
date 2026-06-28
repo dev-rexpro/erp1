@@ -19,7 +19,6 @@ import {
   ShoppingBag,
   DollarSign,
   Folder,
-  Brain,
   MoreHorizontal,
   Gauge,
 } from 'lucide-react'
@@ -30,7 +29,7 @@ const ERPOneLogo = (props: React.ImgHTMLAttributes<HTMLImageElement>) =>
   React.createElement('img', {
     src: '/o1_logo.png',
     alt: 'ERP One Logo',
-    className: props.className + ' object-contain size-5 shrink-0',
+    className: props.className + ' object-contain size-16 shrink-0',
   })
 
 export const sidebarData: SidebarData = {
@@ -181,11 +180,6 @@ export const sidebarData: SidebarData = {
           icon: Folder,
         },
         {
-          title: 'System Intelligence',
-          url: '/system-intelligence',
-          icon: Brain,
-        },
-        {
           title: 'Analytics',
           url: '/analytics',
           icon: Gauge,
@@ -201,7 +195,7 @@ export const sidebarData: SidebarData = {
           icon: Settings,
         },
         {
-          title: 'Others',
+          title: 'Miscellaneous',
           icon: MoreHorizontal,
           items: [
             {

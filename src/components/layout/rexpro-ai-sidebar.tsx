@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { X, Plus, SlidersHorizontal, ArrowUp, Menu, Sparkles } from 'lucide-react'
+import { X, Paperclip, SlidersHorizontal, ArrowUp, Menu } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useRexProAi } from '@/store/use-rexpro-ai'
 import { useLayout } from '@/context/layout-provider'
@@ -228,10 +228,10 @@ Road transport / trucking remains the most efficient carriage mode with a **98%*
                     {msg.content}
                   </div>
                 ) : (
-                  /* AI message: Sparkles icon on a line by itself, text directly on the background below it */
+                  /* AI message: Label and timestamp, text directly below */
                   <div className='flex flex-col gap-2 w-full text-xs text-foreground'>
-                    <div className='flex items-center shrink-0'>
-                      <Sparkles className='size-4.5 text-primary fill-primary/10' />
+                    <div className='flex items-center shrink-0 text-primary'>
+                      <span className='text-xs'>rexpro-ai</span><span className='text-[10px] text-primary/70 mx-0.5'>|</span><span className='text-[10px]'>{new Date(msg.timestamp).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', hour12: true })}</span>
                     </div>
                     <div className='pl-0 text-foreground/90 font-sans leading-relaxed flex flex-col gap-1'>
                       {formatMessageContent(msg.content)}
@@ -244,8 +244,8 @@ Road transport / trucking remains the most efficient carriage mode with a **98%*
             {/* Typing Loader */}
             {isLoading && (
               <div className='flex flex-col gap-2 w-full text-xs text-foreground items-start'>
-                <div className='flex items-center shrink-0'>
-                  <Sparkles className='size-4.5 text-primary fill-primary/10 animate-pulse' />
+                <div className='flex items-center shrink-0 text-primary animate-pulse'>
+                  <span className='text-xs'>rexpro-ai</span><span className='text-[10px] text-primary/70 mx-0.5'>|</span><span className='text-[10px]'>{new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', hour12: true })}</span>
                 </div>
                 <div className='flex gap-1 items-center pl-1 py-1'>
                   <span className='size-1.5 bg-muted-foreground/50 rounded-full animate-bounce delay-75' />
@@ -278,7 +278,7 @@ Road transport / trucking remains the most efficient carriage mode with a **98%*
           <div className='flex items-center justify-between pt-2'>
             <div className='flex items-center gap-1'>
               <Button variant='ghost' size='icon' className='size-7 text-muted-foreground rounded-md'>
-                <Plus className='size-4' />
+                <Paperclip className='size-4' />
               </Button>
               <Button variant='ghost' size='icon' className='size-7 text-muted-foreground rounded-md'>
                 <SlidersHorizontal className='size-4' />
@@ -323,7 +323,7 @@ Road transport / trucking remains the most efficient carriage mode with a **98%*
       <div
         className={cn(
           'relative bg-transparent transition-[width] duration-200 ease-linear hidden md:block shrink-0',
-          isOpen ? 'w-96' : 'w-0'
+          isOpen ? 'w-[360px]' : 'w-0'
         )}
       />
 
@@ -331,7 +331,7 @@ Road transport / trucking remains the most efficient carriage mode with a **98%*
       <div
         className={cn(
           'fixed inset-y-0 end-0 z-10 hidden h-svh transition-[width,padding] duration-200 ease-linear md:flex flex-col bg-transparent text-foreground overflow-hidden',
-          isOpen ? 'w-96' : 'w-0 pointer-events-none',
+          isOpen ? 'w-[360px]' : 'w-0 pointer-events-none',
           isOpen && (variant === 'inset' || variant === 'floating'
             ? 'p-2'
             : 'border-s border-sidebar-border')

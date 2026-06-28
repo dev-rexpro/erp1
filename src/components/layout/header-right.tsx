@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router'
-import { Mail, MessageSquare, Plus, Sparkles } from 'lucide-react'
+import { Mail, MessageSquare, Plus } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
@@ -50,7 +50,7 @@ export function HeaderRight() {
           'bg-muted/25 text-foreground hover:bg-accent h-8 w-8 rounded-md shadow-none'
         )}
       >
-        <Sparkles className='size-4 text-primary fill-primary/20 animate-pulse' />
+        <img src='/rexpro-ai_logo.svg' alt='rexpro-ai' className='size-4' />
       </Button>
       <AddShortcutButton />
     </div>
