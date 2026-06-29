@@ -203,11 +203,11 @@ function ShipmentOverview({ shipment }: { shipment: Shipment }) {
 export function ShipmentDetails({ shipment }: ShipmentDetailsProps) {
   if (!shipment) {
     return (
-      <div className="grid h-full min-h-0 grid-rows-[320px_1fr] overflow-hidden lg:grid-rows-[420px_1fr]">
-        <div className="min-h-0 overflow-hidden">
+      <div className="relative h-full w-full overflow-hidden lg:grid lg:grid-rows-[420px_1fr] lg:min-h-0">
+        <div className="absolute inset-0 z-0 h-full w-full lg:relative lg:inset-auto lg:z-auto lg:h-auto lg:w-auto lg:min-h-0 lg:overflow-hidden">
           <ShipmentRouteMap shipment={null} />
         </div>
-        <div className="min-h-0 overflow-hidden p-4">
+        <div className="absolute bottom-0 left-0 right-0 z-10 max-h-[60%] border-t bg-background shadow-lg overflow-hidden p-4 rounded-t-2xl lg:relative lg:inset-auto lg:z-auto lg:max-h-none lg:rounded-none lg:border-t-0 lg:shadow-none lg:h-auto lg:min-h-0 lg:flex-1">
           <EmptyShipmentOverview />
         </div>
       </div>
@@ -215,13 +215,13 @@ export function ShipmentDetails({ shipment }: ShipmentDetailsProps) {
   }
 
   return (
-    <div className="grid h-full min-h-0 grid-rows-[320px_1fr] overflow-hidden lg:grid-rows-[420px_1fr]">
-      <div className="min-h-0 overflow-hidden">
+    <div className="relative h-full w-full overflow-hidden lg:grid lg:grid-rows-[420px_1fr] lg:min-h-0">
+      <div className="absolute inset-0 z-0 h-full w-full lg:relative lg:inset-auto lg:z-auto lg:h-auto lg:w-auto lg:min-h-0 lg:overflow-hidden">
         <ShipmentRouteMap shipment={shipment} />
       </div>
-      <div className="min-h-0 overflow-hidden">
+      <div className="absolute bottom-0 left-0 right-0 z-10 max-h-[60%] border-t bg-background shadow-lg overflow-hidden flex flex-col rounded-t-2xl lg:relative lg:inset-auto lg:z-auto lg:max-h-none lg:rounded-none lg:border-t-0 lg:shadow-none lg:h-auto lg:min-h-0 lg:flex-1">
         <div className="h-full min-h-0 py-2">
-          <Tabs defaultValue="overview" className="h-full gap-0">
+          <Tabs defaultValue="overview" className="h-full gap-0 flex flex-col">
             <TabsList
               className="w-full justify-start gap-2 border-b px-4 **:data-[slot=tabs-trigger]:text-xs sm:gap-4 sm:**:data-[slot=tabs-trigger]:text-sm"
               variant="line"

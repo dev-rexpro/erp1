@@ -81,6 +81,14 @@ type ShipmentRouteMapProps = {
 export function ShipmentRouteMap({ shipment }: ShipmentRouteMapProps) {
   const [borders, setBorders] = useState<GeoJSON.MultiLineString | null>(null);
   const [land, setLand] = useState<GeoJSON.FeatureCollection | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 1024);
+    const handleResize = () => setIsMobile(window.innerWidth < 1024);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -177,7 +185,7 @@ export function ShipmentRouteMap({ shipment }: ShipmentRouteMapProps) {
         className="block size-full bg-[#d4dadc] dark:bg-[#2C353C]"
         role="img"
         viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
-        preserveAspectRatio="xMidYMid meet"
+        preserveAspectRatio={isMobile ? "xMidYMid slice" : "xMidYMid meet"}
       >
         <rect height={HEIGHT} width={WIDTH} className="fill-[#d4dadc] dark:fill-[#2C353C]" />
         {land && (

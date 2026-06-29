@@ -26,17 +26,27 @@ export function InvFormDetails() {
   return (
     <section className='flex flex-col gap-3'>
       <FieldGroup>
-        <Field className='gap-1'>
-          <FieldLabel className='text-xs' htmlFor='reference-number'>
-            Reference Number
-          </FieldLabel>
-          <InputGroup>
-            <InputGroupInput id='reference-number' {...register('referenceNumber')} />
-            <InputGroupAddon align='inline-end'>
-              <Hash />
-            </InputGroupAddon>
-          </InputGroup>
-        </Field>
+        <div className='grid gap-5 md:grid-cols-2'>
+          <Field className='gap-1'>
+            <FieldLabel className='text-xs' htmlFor='reference-number'>
+              Invoice Number
+            </FieldLabel>
+            <InputGroup>
+              <InputGroupInput id='reference-number' {...register('referenceNumber')} />
+              <InputGroupAddon align='inline-end'>
+                <Hash className='size-4' />
+              </InputGroupAddon>
+            </InputGroup>
+          </Field>
+          <Field className='gap-1'>
+            <FieldLabel className='text-xs' htmlFor='po-number'>
+              PO Number
+            </FieldLabel>
+            <InputGroup>
+              <InputGroupInput id='po-number' {...register('poNumber')} />
+            </InputGroup>
+          </Field>
+        </div>
 
         <div className='grid gap-5 md:grid-cols-2'>
           {dateFields.map((dateField) => (
@@ -55,6 +65,15 @@ export function InvFormDetails() {
             />
           ))}
         </div>
+
+        <Field className='gap-1'>
+          <FieldLabel className='text-xs' htmlFor='ship-to'>
+            Ship To Address
+          </FieldLabel>
+          <InputGroup>
+            <InputGroupInput id='ship-to' {...register('shipTo')} />
+          </InputGroup>
+        </Field>
       </FieldGroup>
     </section>
   )

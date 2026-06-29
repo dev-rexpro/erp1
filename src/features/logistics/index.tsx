@@ -50,11 +50,10 @@ export function CargoTracking() {
         </div>
       </Main>
 
-      {/* ===== Responsive Mobile Drawer for Shipment Details ===== */}
       <Sheet open={detailsOpen} onOpenChange={setDetailsOpen}>
         <SheetContent
           side="right"
-          className="gap-0 p-0 data-[side=right]:w-full data-[side=right]:sm:max-w-none data-[side=right]:md:w-3/4"
+          className="w-full max-w-full h-full p-0 gap-0 border-none"
         >
           <SheetHeader className="sr-only">
             <SheetTitle>{selectedShipment ? `Shipment ${selectedShipment.id}` : "Shipment details"}</SheetTitle>

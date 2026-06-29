@@ -5,20 +5,24 @@ import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Field, FieldGroup, FieldLabel } from '@/components/ui/field'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 
 import { type Invoice } from '../data/schema'
 import { useInvoices } from './invoices-provider'
 
 import {
   defaultInvoiceValues,
-  defaultInvoiceFrom,
   invoiceClients,
   INVOICE_PAPER_HEIGHT,
   INVOICE_PAPER_SCALE,
   INVOICE_PAPER_WIDTH,
+  getInitialInvoiceFormValues,
   type InvoiceFormValues,
 } from './invoice-form-data'
+import { getCompanySettings } from '@/lib/company-settings'
 import { InvFormDetails } from './inv-form-details'
 import { InvFormClient } from './inv-form-client'
 import { InvFormItems } from './inv-form-items'
@@ -52,15 +56,34 @@ export function InvoiceDetailView({ data }: InvoiceDetailViewProps) {
       const matchedClient = invoiceClients.find(
         (c) => c.name.toLowerCase() === invoice.firstName.toLowerCase()
       )
+      const settings = getCompanySettings()
       return {
         referenceNumber: invoice.username,
         issuedDate: new Date(invoice.createdAt).toISOString().split('T')[0],
         paymentDueDate: invoice.dueDate,
-        from: defaultInvoiceFrom,
+        from: {
+          name: settings.name,
+          email: settings.email,
+          phone: settings.phone,
+          website: settings.website,
+          addressLines: [settings.address],
+          taxId: settings.npwp,
+          paymentAccountName: settings.bankAccountName,
+          routingNumber: settings.bankAccount,
+          issuerName: 'Authorized Signature Person',
+        },
         to: matchedClient || defaultInvoiceValues.to,
         taxId: 'vat',
         discountType: 'fixed',
         discountValue: 0,
+        poNumber: 'PO-2026-9912',
+        shipTo: 'PT Rexindo Aruna Sedaya Main Warehouse, Port of Tanjung Priok, Jakarta, Indonesia',
+        bankName: settings.bankName,
+        bankAccount: settings.bankAccount,
+        bankAccountName: settings.bankAccountName,
+        logoUrl: settings.logoUrl,
+        stampUrl: settings.stampUrl,
+        notes: 'Thank you for your business.',
         items: [
           {
             id: 'item-1',
@@ -71,7 +94,7 @@ export function InvoiceDetailView({ data }: InvoiceDetailViewProps) {
         ],
       }
     }
-    return defaultInvoiceValues
+    return getInitialInvoiceFormValues()
   }, [invoice])
 
   const form = useForm<InvoiceFormValues>({ defaultValues: formDefaults })
@@ -94,11 +117,33 @@ export function InvoiceDetailView({ data }: InvoiceDetailViewProps) {
     window.print()
   }
 
+  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        form.setValue('logoUrl', reader.result as string)
+      }
+      reader.readAsDataURL(file)
+    }
+  }
+
+  const handleStampUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        form.setValue('stampUrl', reader.result as string)
+      }
+      reader.readAsDataURL(file)
+    }
+  }
+
   return (
     <FormProvider {...form}>
       <div className='flex flex-col gap-6'>
         {/* Page Header — versi2 layout */}
-        <div className='flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between'>
+        <div className='flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between no-print'>
           <div className='flex flex-col gap-1'>
             <h1 className='font-medium text-3xl leading-none tracking-tight'>
               {selectedInvoiceId === 'new' ? 'Create New Invoice' : `Edit Invoice`}
@@ -127,27 +172,81 @@ export function InvoiceDetailView({ data }: InvoiceDetailViewProps) {
         {/* Two-column form — versi2 layout: left form, right preview */}
         <form className='grid gap-5 xl:grid-cols-2' noValidate onSubmit={(e) => e.preventDefault()}>
           {/* Left Column: Form Editor */}
-          <div className='flex flex-col gap-4 rounded-xl border bg-card p-4'>
-            <Tabs defaultValue='invoice'>
+          <div className='flex flex-col gap-4 rounded-xl border bg-card p-4 no-print'>
+            <Tabs defaultValue='invoice' className='flex flex-col gap-4'>
               <TabsList className='w-full'>
                 <TabsTrigger value='invoice'>Invoice</TabsTrigger>
                 <TabsTrigger value='payment'>Payment</TabsTrigger>
                 <TabsTrigger value='business'>Business</TabsTrigger>
               </TabsList>
-            </Tabs>
 
-            <InvFormDetails />
-            <Separator />
-            <InvFormClient />
-            <Separator />
-            <InvFormItems />
-            <Separator />
-            <InvFormAdjustments />
+              <TabsContent value='invoice' className='flex flex-col gap-4 mt-0'>
+                <InvFormDetails />
+                <Separator />
+                <InvFormClient />
+                <Separator />
+                <InvFormItems />
+                <Separator />
+                <InvFormAdjustments />
+              </TabsContent>
+
+              <TabsContent value='payment' className='flex flex-col gap-4 mt-0'>
+                <section className='flex flex-col gap-3'>
+                  <h2 className='font-medium tracking-tight text-sm'>Bank Details</h2>
+                  <FieldGroup>
+                    <Field className='gap-1'>
+                      <FieldLabel className='text-xs' htmlFor='bank-name'>Bank Name</FieldLabel>
+                      <Input id='bank-name' {...form.register('bankName')} placeholder='e.g., MANDIRI' />
+                    </Field>
+                    <Field className='gap-1'>
+                      <FieldLabel className='text-xs' htmlFor='bank-account'>Account Number</FieldLabel>
+                      <Input id='bank-account' {...form.register('bankAccount')} placeholder='e.g., 123-456-7890' />
+                    </Field>
+                    <Field className='gap-1'>
+                      <FieldLabel className='text-xs' htmlFor='bank-account-name'>Account Holder / A/N</FieldLabel>
+                      <Input id='bank-account-name' {...form.register('bankAccountName')} placeholder='e.g., PT REXINDO ARUNA SEDAYA' />
+                    </Field>
+                  </FieldGroup>
+                </section>
+              </TabsContent>
+
+              <TabsContent value='business' className='flex flex-col gap-4 mt-0'>
+                <section className='flex flex-col gap-3'>
+                  <h2 className='font-medium tracking-tight text-sm'>Business Identity & Visuals</h2>
+                  <FieldGroup>
+                    <Field className='gap-1'>
+                      <FieldLabel className='text-xs' htmlFor='logo-upload'>Upload Company Logo</FieldLabel>
+                      <Input id='logo-upload' type='file' accept='image/*' onChange={handleLogoUpload} />
+                      {invoiceWatch.logoUrl && (
+                        <div className='flex items-center gap-2 mt-1'>
+                          <span className='text-[10px] text-green-600 font-semibold'>Logo loaded successfully</span>
+                          <Button type='button' variant='ghost' size='sm' className='h-5 px-1.5 text-destructive text-[10px]' onClick={() => form.setValue('logoUrl', '')}>Clear</Button>
+                        </div>
+                      )}
+                    </Field>
+                    <Field className='gap-1'>
+                      <FieldLabel className='text-xs' htmlFor='stamp-upload'>Upload Company Stamp & Signature</FieldLabel>
+                      <Input id='stamp-upload' type='file' accept='image/*' onChange={handleStampUpload} />
+                      {invoiceWatch.stampUrl && (
+                        <div className='flex items-center gap-2 mt-1'>
+                          <span className='text-[10px] text-green-600 font-semibold'>Stamp loaded successfully</span>
+                          <Button type='button' variant='ghost' size='sm' className='h-5 px-1.5 text-destructive text-[10px]' onClick={() => form.setValue('stampUrl', '')}>Clear</Button>
+                        </div>
+                      )}
+                    </Field>
+                    <Field className='gap-1'>
+                      <FieldLabel className='text-xs' htmlFor='notes'>Invoice Notes</FieldLabel>
+                      <Textarea id='notes' {...form.register('notes')} placeholder='Terms, manual comments, etc...' className='min-h-[80px]' />
+                    </Field>
+                  </FieldGroup>
+                </section>
+              </TabsContent>
+            </Tabs>
           </div>
 
           {/* Right Column: Preview Pane — versi2 layout */}
           <div className='flex flex-col rounded-xl border bg-card'>
-            <div className='flex items-center justify-between px-4 py-4'>
+            <div className='flex items-center justify-between px-4 py-4 no-print'>
               <h2 className='font-medium text-lg'>Preview</h2>
               <div className='flex items-center gap-1'>
                 <Button type='button' variant='outline' size='sm' onClick={handlePrint}>
@@ -179,12 +278,12 @@ export function InvoiceDetailView({ data }: InvoiceDetailViewProps) {
                   transform: paperLayout === null ? 'translate(-50%, -50%)' : 'translateX(-50%)',
                   width: paperLayout ? INVOICE_PAPER_WIDTH * paperLayout.scale : INVOICE_PAPER_WIDTH * INVOICE_PAPER_SCALE,
                 }}
-                className='absolute left-1/2 opacity-0 data-[ready=true]:opacity-100'
+                className='absolute left-1/2 opacity-0 data-[ready=true]:opacity-100 print-paper-wrapper-parent'
                 data-ready={paperLayout !== null}
               >
                 <div
                   style={{ transform: `scale(${paperLayout?.scale ?? INVOICE_PAPER_SCALE})` }}
-                  className='origin-top-left'
+                  className='origin-top-left print-paper-wrapper'
                 >
                   <InvPaper invoice={invoiceWatch} />
                 </div>
