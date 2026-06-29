@@ -309,9 +309,9 @@ Road transport / trucking remains the most efficient carriage mode with a **98%*
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetContent
           side='right'
-          className='bg-background text-foreground w-[320px] sm:w-[380px] p-0 [&>button]:hidden'
+          className='bg-background text-foreground !w-full !max-w-full sm:!w-[380px] sm:!max-w-[380px] p-0 [&>button]:hidden overflow-hidden'
         >
-          <div className='flex h-full w-full flex-col'>{renderContent()}</div>
+          <div className='flex h-full w-full flex-col overflow-hidden'>{renderContent()}</div>
         </SheetContent>
       </Sheet>
     )

@@ -26,19 +26,19 @@ export function HeaderRight() {
   return (
     <div className='ms-auto flex items-center gap-2'>
       <Button variant='outline' asChild size='sm' className={cn(
-        'bg-muted/25 text-foreground hover:bg-accent h-8 gap-1.5 rounded-md shadow-none text-sm font-normal'
+        'bg-muted/25 text-foreground hover:bg-accent h-8 rounded-md shadow-none text-sm font-normal max-sm:w-8 max-sm:px-0 sm:gap-1.5 sm:px-3'
       )}>
         <Link to='/chats'>
           <MessageSquare className='size-4' />
-          <span>Chat</span>
+          <span className='hidden sm:inline'>Chat</span>
         </Link>
       </Button>
       <Button variant='outline' asChild size='sm' className={cn(
-        'bg-muted/25 text-foreground hover:bg-accent h-8 gap-1.5 rounded-md shadow-none text-sm font-normal'
+        'bg-muted/25 text-foreground hover:bg-accent h-8 rounded-md shadow-none text-sm font-normal max-sm:w-8 max-sm:px-0 sm:gap-1.5 sm:px-3'
       )}>
         <Link to='/mail'>
           <Mail className='size-4' />
-          <span>Mail</span>
+          <span className='hidden sm:inline'>Mail</span>
         </Link>
       </Button>
       <Button

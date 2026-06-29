@@ -32,13 +32,13 @@ export function Analytics() {
           </p>
         </div>
 
-        <Tabs defaultValue='overview' className='flex flex-col gap-4'>
+        <Tabs defaultValue='overview' className='flex flex-col gap-4 w-full overflow-hidden'>
           <div className='flex flex-wrap items-center justify-between gap-3'>
-            <TabsList className='gap-1'>
-              <TabsTrigger value='overview'>Overview</TabsTrigger>
-              <TabsTrigger value='vessels'>Vessels & Transit</TabsTrigger>
-              <TabsTrigger value='customs'>Customs & Compliance</TabsTrigger>
-              <TabsTrigger value='finance'>Freight Revenue</TabsTrigger>
+            <TabsList className='gap-1 w-full justify-start overflow-x-auto no-scrollbar flex shrink-0'>
+              <TabsTrigger value='overview' className='shrink-0'>Overview</TabsTrigger>
+              <TabsTrigger value='vessels' className='shrink-0'>Vessels & Transit</TabsTrigger>
+              <TabsTrigger value='customs' className='shrink-0'>Customs & Compliance</TabsTrigger>
+              <TabsTrigger value='finance' className='shrink-0'>Freight Revenue</TabsTrigger>
             </TabsList>
 
             <AnalyticsToolbar />

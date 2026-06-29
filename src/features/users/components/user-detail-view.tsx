@@ -153,12 +153,12 @@ export function UserDetailView({ data }: UserDetailViewProps) {
 
         <form className='grid gap-5' noValidate onSubmit={(e) => e.preventDefault()}>
           <div className='flex flex-col gap-4 rounded-xl border bg-card p-4'>
-            <Tabs defaultValue='details'>
-              <TabsList className='w-full'>
-                <TabsTrigger value='details'>Details</TabsTrigger>
-                <TabsTrigger value='address'>Address & Contact</TabsTrigger>
-                <TabsTrigger value='accounting'>Accounting</TabsTrigger>
-                <TabsTrigger value='settings'>Settings</TabsTrigger>
+            <Tabs defaultValue='details' className='w-full overflow-hidden'>
+              <TabsList className='w-full overflow-x-auto no-scrollbar justify-start flex shrink-0'>
+                <TabsTrigger value='details' className='shrink-0'>Details</TabsTrigger>
+                <TabsTrigger value='address' className='shrink-0'>Address & Contact</TabsTrigger>
+                <TabsTrigger value='accounting' className='shrink-0'>Accounting</TabsTrigger>
+                <TabsTrigger value='settings' className='shrink-0'>Settings</TabsTrigger>
               </TabsList>
 
               <div className='mt-6 flex flex-col gap-6'>

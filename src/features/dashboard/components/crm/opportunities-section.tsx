@@ -105,9 +105,9 @@ export function OpportunitiesSection() {
             Track qualified leads moving through discovery, proposal, and closing stages.
           </CardDescription>
           <CardAction>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
               <Input
-                className="h-7 w-44 md:w-52"
+                className="h-7 w-full sm:w-44 md:w-52"
                 placeholder="Search deals..."
                 value={searchQuery}
                 onChange={(event) => {
@@ -119,7 +119,7 @@ export function OpportunitiesSection() {
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" size="sm">
                     <ListFilter data-icon="inline-start" />
-                    Stage
+                    <span className="hidden sm:inline">Stage</span>
                     <ChevronDownIcon data-icon="inline-end" />
                   </Button>
                 </DropdownMenuTrigger>
@@ -143,7 +143,7 @@ export function OpportunitiesSection() {
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" size="sm">
                     <ListFilter data-icon="inline-start" />
-                    Health
+                    <span className="hidden sm:inline">Health</span>
                     <ChevronDownIcon data-icon="inline-end" />
                   </Button>
                 </DropdownMenuTrigger>
@@ -167,7 +167,7 @@ export function OpportunitiesSection() {
           </CardAction>
         </CardHeader>
         <CardContent className="flex flex-col gap-4 px-0">
-          <div className="overflow-hidden">
+          <div className="w-full overflow-x-auto">
             <Table className="**:data-[slot='table-cell']:px-4 **:data-[slot='table-head']:px-4 **:data-[slot='table-cell']:py-4">
               <TableHeader className="border-t **:data-[slot='table-head']:h-11 **:data-[slot='table-head']:font-medium **:data-[slot='table-head']:text-foreground **:data-[slot='table-head']:text-sm">
                 {table.getHeaderGroups().map((headerGroup) => (

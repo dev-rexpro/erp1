@@ -43,10 +43,15 @@ export function Header({ className, fixed = true, children, ...props }: HeaderPr
             'after:bg-background/20 after:absolute after:inset-0 after:-z-10 after:backdrop-blur-lg'
         )}
       >
-        {showSidebarTrigger && (
+        {showSidebarTrigger ? (
           <>
             <SidebarTrigger variant='outline' className='max-md:scale-125' />
             <Separator orientation='vertical' className='h-6' />
+          </>
+        ) : (
+          <>
+            <SidebarTrigger variant='outline' className='max-md:scale-125 md:hidden' />
+            <Separator orientation='vertical' className='h-6 md:hidden' />
           </>
         )}
         {children}
