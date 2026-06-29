@@ -309,7 +309,7 @@ Road transport / trucking remains the most efficient carriage mode with a **98%*
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetContent
           side='right'
-          className='bg-background text-foreground w-[320px] sm:w-[380px] p-0 border-s border-sidebar-border [&>button]:hidden'
+          className='bg-background text-foreground w-[320px] sm:w-[380px] p-0 [&>button]:hidden'
         >
           <div className='flex h-full w-full flex-col'>{renderContent()}</div>
         </SheetContent>
@@ -327,12 +327,12 @@ Road transport / trucking remains the most efficient carriage mode with a **98%*
         )}
       />
 
-      {/* Desktop sidebar panel container */}
+       {/* Desktop sidebar panel container */}
       <div
         className={cn(
           'fixed inset-y-0 end-0 z-10 hidden h-svh transition-[width,padding] duration-200 ease-linear md:flex flex-col bg-transparent text-foreground overflow-hidden',
           isOpen ? 'w-[360px]' : 'w-0 pointer-events-none',
-          isOpen && (variant === 'inset' || variant === 'floating'
+          isOpen && (variant === 'floating' || variant === 'inset'
             ? 'p-2'
             : 'border-s border-sidebar-border')
         )}
@@ -340,8 +340,7 @@ Road transport / trucking remains the most efficient carriage mode with a **98%*
         <div
           className={cn(
             'bg-background flex h-full w-full flex-col',
-            (variant === 'inset' || variant === 'floating') &&
-            'border border-sidebar-border rounded-xl shadow-sm overflow-hidden'
+            variant === 'floating' && 'border border-sidebar-border rounded-lg shadow-sm overflow-hidden'
           )}
         >
           {renderContent()}
