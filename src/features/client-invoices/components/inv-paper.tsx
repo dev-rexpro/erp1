@@ -46,13 +46,13 @@ export function InvPaper({ invoice }: { invoice: InvoiceFormValues }) {
         .inv-table td, .inv-table th { border: 1px solid #000; padding: 5px; font-size: 11px; vertical-align: top; font-family: Arial, sans-serif; color: #000; }
         .inv-header { text-align: center; }
         .inv-header h2 { font-size: 20px; font-weight: bold; margin-bottom: 2px; }
-        .inv-table td.inv-title { font-family: Arial, sans-serif !important; font-size: 22px !important; font-weight: bold; text-align: center; padding: 10px; background-color: #f3f4f6; }
+        .inv-table td.inv-title { font-family: Arial, sans-serif !important; font-size: 22px !important; font-weight: bold; text-align: center; padding: 10px;          background-color: #ffffff; }
         .inv-text-center { text-align: center; }
         .inv-text-right { text-align: right; }
         .inv-no-border { border: none !important; }
         .inv-signature { height: 90px; position: relative; text-align: center; }
         .inv-signature span { display: block; font-weight: bold; font-size: 11px; margin-top: 2px; }
-        .inv-logo-box { width: 85px; height: 85px; border: 1px solid #000; margin: auto; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; background-color: #f9fafb; overflow: hidden; }
+         .inv-logo-box { ... background-color: #ffffff; overflow: hidden; }
         .inv-qr { width: 85px; height: 85px; border: 1px solid #000; margin: auto; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; overflow: hidden; }
         .inv-qr-qris { width: 85px; height: 85px; border: 1px solid #000; margin: auto; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; background-color: #f9fafb; }
         .inv-stamp-img { display: block; margin: 0 auto; width: 130px; height: 60px; object-fit: contain; opacity: 0.9; pointer-events: none; }

@@ -18,6 +18,7 @@ import { Route as AuthenticatedSystemIntelligenceRouteImport } from './routes/_a
 import { Route as AuthenticatedProductivityRouteImport } from './routes/_authenticated/productivity'
 import { Route as AuthenticatedMailRouteImport } from './routes/_authenticated/mail'
 import { Route as AuthenticatedDocumentHubRouteImport } from './routes/_authenticated/document-hub'
+import { Route as AuthenticatedChatAiRouteImport } from './routes/_authenticated/chat-ai'
 import { Route as AuthenticatedAnalyticsRouteImport } from './routes/_authenticated/analytics'
 import { Route as errors503RouteImport } from './routes/(errors)/503'
 import { Route as errors500RouteImport } from './routes/(errors)/500'
@@ -116,6 +117,11 @@ const AuthenticatedDocumentHubRoute =
     path: '/document-hub',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedChatAiRoute = AuthenticatedChatAiRouteImport.update({
+  id: '/chat-ai',
+  path: '/chat-ai',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedAnalyticsRoute = AuthenticatedAnalyticsRouteImport.update({
   id: '/analytics',
   path: '/analytics',
@@ -397,11 +403,11 @@ const AuthenticatedCommercialClientAccountsRoute =
   } as any)
 
 export interface FileRoutesByFullPath {
-  '/clerk': typeof ClerkAuthenticatedRouteRouteWithChildren
+  '/': typeof AuthenticatedIndexRoute
+  '/clerk': typeof ClerkauthRouteRouteWithChildren
   '/chat': typeof ChatRoute
   '/mail-standalone': typeof MailStandaloneRoute
   '/settings': typeof AuthenticatedSettingsRouteRouteWithChildren
-  '/clerk/': typeof ClerkauthRouteRouteWithChildren
   '/forgot-password': typeof authForgotPasswordRoute
   '/otp': typeof authOtpRoute
   '/sign-in': typeof authSignInRoute
@@ -413,11 +419,11 @@ export interface FileRoutesByFullPath {
   '/500': typeof errors500Route
   '/503': typeof errors503Route
   '/analytics': typeof AuthenticatedAnalyticsRoute
+  '/chat-ai': typeof AuthenticatedChatAiRoute
   '/document-hub': typeof AuthenticatedDocumentHubRoute
   '/mail': typeof AuthenticatedMailRoute
   '/productivity': typeof AuthenticatedProductivityRoute
   '/system-intelligence': typeof AuthenticatedSystemIntelligenceRoute
-  '/': typeof AuthenticatedIndexRoute
   '/commercial/client-accounts': typeof AuthenticatedCommercialClientAccountsRoute
   '/commercial/client-contracts': typeof AuthenticatedCommercialClientContractsRoute
   '/commercial/service-quotations': typeof AuthenticatedCommercialServiceQuotationsRoute
@@ -448,17 +454,17 @@ export interface FileRoutesByFullPath {
   '/clerk/sign-in': typeof ClerkauthSignInRoute
   '/clerk/sign-up': typeof ClerkauthSignUpRoute
   '/clerk/user-management': typeof ClerkAuthenticatedUserManagementRoute
-  '/apps': typeof AuthenticatedAppsIndexRoute
-  '/chats': typeof AuthenticatedChatsIndexRoute
-  '/help-center': typeof AuthenticatedHelpCenterIndexRoute
+  '/apps/': typeof AuthenticatedAppsIndexRoute
+  '/chats/': typeof AuthenticatedChatsIndexRoute
+  '/help-center/': typeof AuthenticatedHelpCenterIndexRoute
   '/settings/': typeof AuthenticatedSettingsIndexRoute
-  '/tasks': typeof AuthenticatedTasksIndexRoute
-  '/users': typeof AuthenticatedUsersIndexRoute
+  '/tasks/': typeof AuthenticatedTasksIndexRoute
+  '/users/': typeof AuthenticatedUsersIndexRoute
 }
 export interface FileRoutesByTo {
+  '/clerk': typeof ClerkauthRouteRouteWithChildren
   '/chat': typeof ChatRoute
   '/mail-standalone': typeof MailStandaloneRoute
-  '/clerk': typeof ClerkAuthenticatedRouteRouteWithChildren
   '/forgot-password': typeof authForgotPasswordRoute
   '/otp': typeof authOtpRoute
   '/sign-in': typeof authSignInRoute
@@ -470,6 +476,7 @@ export interface FileRoutesByTo {
   '/500': typeof errors500Route
   '/503': typeof errors503Route
   '/analytics': typeof AuthenticatedAnalyticsRoute
+  '/chat-ai': typeof AuthenticatedChatAiRoute
   '/document-hub': typeof AuthenticatedDocumentHubRoute
   '/mail': typeof AuthenticatedMailRoute
   '/productivity': typeof AuthenticatedProductivityRoute
@@ -532,6 +539,7 @@ export interface FileRoutesById {
   '/(errors)/500': typeof errors500Route
   '/(errors)/503': typeof errors503Route
   '/_authenticated/analytics': typeof AuthenticatedAnalyticsRoute
+  '/_authenticated/chat-ai': typeof AuthenticatedChatAiRoute
   '/_authenticated/document-hub': typeof AuthenticatedDocumentHubRoute
   '/_authenticated/mail': typeof AuthenticatedMailRoute
   '/_authenticated/productivity': typeof AuthenticatedProductivityRoute
@@ -577,11 +585,11 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/'
     | '/clerk'
     | '/chat'
     | '/mail-standalone'
     | '/settings'
-    | '/clerk/'
     | '/forgot-password'
     | '/otp'
     | '/sign-in'
@@ -593,11 +601,11 @@ export interface FileRouteTypes {
     | '/500'
     | '/503'
     | '/analytics'
+    | '/chat-ai'
     | '/document-hub'
     | '/mail'
     | '/productivity'
     | '/system-intelligence'
-    | '/'
     | '/commercial/client-accounts'
     | '/commercial/client-contracts'
     | '/commercial/service-quotations'
@@ -628,17 +636,17 @@ export interface FileRouteTypes {
     | '/clerk/sign-in'
     | '/clerk/sign-up'
     | '/clerk/user-management'
-    | '/apps'
-    | '/chats'
-    | '/help-center'
+    | '/apps/'
+    | '/chats/'
+    | '/help-center/'
     | '/settings/'
-    | '/tasks'
-    | '/users'
+    | '/tasks/'
+    | '/users/'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/clerk'
     | '/chat'
     | '/mail-standalone'
-    | '/clerk'
     | '/forgot-password'
     | '/otp'
     | '/sign-in'
@@ -650,6 +658,7 @@ export interface FileRouteTypes {
     | '/500'
     | '/503'
     | '/analytics'
+    | '/chat-ai'
     | '/document-hub'
     | '/mail'
     | '/productivity'
@@ -711,6 +720,7 @@ export interface FileRouteTypes {
     | '/(errors)/500'
     | '/(errors)/503'
     | '/_authenticated/analytics'
+    | '/_authenticated/chat-ai'
     | '/_authenticated/document-hub'
     | '/_authenticated/mail'
     | '/_authenticated/productivity'
@@ -797,7 +807,7 @@ declare module '@tanstack/react-router' {
     '/_authenticated': {
       id: '/_authenticated'
       path: ''
-      fullPath: ''
+      fullPath: '/'
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
@@ -834,6 +844,13 @@ declare module '@tanstack/react-router' {
       path: '/document-hub'
       fullPath: '/document-hub'
       preLoaderRoute: typeof AuthenticatedDocumentHubRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/chat-ai': {
+      id: '/_authenticated/chat-ai'
+      path: '/chat-ai'
+      fullPath: '/chat-ai'
+      preLoaderRoute: typeof AuthenticatedChatAiRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/analytics': {
@@ -922,8 +939,8 @@ declare module '@tanstack/react-router' {
     }
     '/clerk/(auth)': {
       id: '/clerk/(auth)'
-      path: '/'
-      fullPath: '/clerk/'
+      path: ''
+      fullPath: '/clerk'
       preLoaderRoute: typeof ClerkauthRouteRouteImport
       parentRoute: typeof ClerkRouteRoute
     }
@@ -937,14 +954,14 @@ declare module '@tanstack/react-router' {
     '/_authenticated/users/': {
       id: '/_authenticated/users/'
       path: '/users'
-      fullPath: '/users'
+      fullPath: '/users/'
       preLoaderRoute: typeof AuthenticatedUsersIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/tasks/': {
       id: '/_authenticated/tasks/'
       path: '/tasks'
-      fullPath: '/tasks'
+      fullPath: '/tasks/'
       preLoaderRoute: typeof AuthenticatedTasksIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
@@ -958,21 +975,21 @@ declare module '@tanstack/react-router' {
     '/_authenticated/help-center/': {
       id: '/_authenticated/help-center/'
       path: '/help-center'
-      fullPath: '/help-center'
+      fullPath: '/help-center/'
       preLoaderRoute: typeof AuthenticatedHelpCenterIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/chats/': {
       id: '/_authenticated/chats/'
       path: '/chats'
-      fullPath: '/chats'
+      fullPath: '/chats/'
       preLoaderRoute: typeof AuthenticatedChatsIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/apps/': {
       id: '/_authenticated/apps/'
       path: '/apps'
-      fullPath: '/apps'
+      fullPath: '/apps/'
       preLoaderRoute: typeof AuthenticatedAppsIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
@@ -1217,6 +1234,7 @@ const AuthenticatedSettingsRouteRouteWithChildren =
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedSettingsRouteRoute: typeof AuthenticatedSettingsRouteRouteWithChildren
   AuthenticatedAnalyticsRoute: typeof AuthenticatedAnalyticsRoute
+  AuthenticatedChatAiRoute: typeof AuthenticatedChatAiRoute
   AuthenticatedDocumentHubRoute: typeof AuthenticatedDocumentHubRoute
   AuthenticatedMailRoute: typeof AuthenticatedMailRoute
   AuthenticatedProductivityRoute: typeof AuthenticatedProductivityRoute
@@ -1254,6 +1272,7 @@ interface AuthenticatedRouteRouteChildren {
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedSettingsRouteRoute: AuthenticatedSettingsRouteRouteWithChildren,
   AuthenticatedAnalyticsRoute: AuthenticatedAnalyticsRoute,
+  AuthenticatedChatAiRoute: AuthenticatedChatAiRoute,
   AuthenticatedDocumentHubRoute: AuthenticatedDocumentHubRoute,
   AuthenticatedMailRoute: AuthenticatedMailRoute,
   AuthenticatedProductivityRoute: AuthenticatedProductivityRoute,
